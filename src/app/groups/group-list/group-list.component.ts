@@ -5,6 +5,9 @@ import {ButtonModule} from "primeng/button";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
+import {DialogModule} from "primeng/dialog";
+import {InputTextModule} from "primeng/inputtext";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
 export interface IGroup {
   id: number;
@@ -19,13 +22,21 @@ export interface IGroup {
     TranslateModule,
     ButtonModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    DialogModule,
+    InputTextModule,
+    ReactiveFormsModule
   ],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.scss',
   providers: [ConfirmationService, MessageService]
 })
 export class GroupListComponent implements OnInit {
+
+  public formShown: boolean = false;
+  public formGroup = this.fb.group({
+    name: ['', Validators.required]
+  });
 
   public groups: IGroup[] = [
     {id: 1, name: 'Skupina 1'},
@@ -35,19 +46,19 @@ export class GroupListComponent implements OnInit {
   constructor(
     private transateService: TranslateService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private fb: FormBuilder
   ) {}
 
   public ngOnInit(): void {
-
   }
 
   public onCreateGroup(): void {
-    console.log('onCreateGroup');
+    this.formShown = true;
   }
 
   public onEditGroup(id: number): void {
-    console.log('onEditGroup');
+    this.formShown = true;
   }
 
   public onDeleteConfirm(id: number): void {
