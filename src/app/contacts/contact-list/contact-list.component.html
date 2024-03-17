@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <div class="row">
+    <h2>{{ 'contacts.headline' | translate }}</h2>
+  </div>
+  <div class="row">
+    <p-treeTable></p-treeTable>
+  </div>
+  <div class="row">
+    <p-button
+      [label]="'common.create' | translate"
+      (onClick)="onCreateContact()"
+    ></p-button>
+  </div>
+</div>

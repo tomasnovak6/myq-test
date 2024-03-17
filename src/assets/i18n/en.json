@@ -1,0 +1,28 @@
+{
+  "common": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "contacts": {
+    "headline": "Contacts",
+    "fullname": "Full name",
+    "email": "E-mail",
+    "phone": "Phone"
+  },
+  "groups": {
+    "headline": "Groups",
+    "name": "Name",
+    "operations": {
+      "delete": {
+        "header": "Delete group",
+        "message": "Do you want to delete this group?",
+        "success": "The group was successfully deleted."
+      },
+      "edit": {
+        "header": "Edit group",
+        "success": "The group was successfully edited."
+      }
+    }
+  }
+}
