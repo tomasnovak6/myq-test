@@ -24,10 +24,10 @@
         <tr>
           <td>{{ group.name }}</td>
           <td>
-            <p-button icon="pi pi-pencil" (onClick)="onEditGroup(group.id)"></p-button>
+            <p-button icon="pi pi-pencil" (onClick)="onEditGroup(group.name)"></p-button>
           </td>
           <td>
-            <p-button icon="pi pi-trash" (onClick)="onDeleteConfirm(group.id)"></p-button>
+            <p-button icon="pi pi-trash" (onClick)="onDeleteConfirm(group.name)"></p-button>
           </td>
         </tr>
       </ng-template>

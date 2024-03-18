@@ -1,12 +1,12 @@
 <main class="main">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <h1 class="text-center">{{ title }}</h1>
     </div>
 
     <div class="row">
       <div class="col-6">
-        <app-contact-list></app-contact-list>
+        <app-contact-list [contacts]="contacts"></app-contact-list>
       </div>
       <div class="col-6">
         <app-group-list></app-group-list>

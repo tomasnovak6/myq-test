@@ -12,7 +12,35 @@
   </div>
 
   <div class="row">
-    <p-treeTable></p-treeTable>
+    <!-- <p-treeTable></p-treeTable> -->
+    <p-table [value]="contacts">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'contacts.fullname' | translate }}</th>
+          <th>{{ 'contacts.email' | translate }}</th>
+          <th>{{ 'contacts.phone' | translate }}</th>
+          <th>{{ 'contacts.group' | translate }}</th>
+          <th>{{ 'contacts.tags' | translate }}</th>
+          <th>{{ 'common.edit' | translate }}</th>
+          <th>{{ 'common.delete' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-contact>
+        <tr>
+          <td>{{ contact.fullname }}</td>
+          <td>{{ contact.email }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>{{ contact.group }}</td>
+          <td>{{ contact.tags }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" (onClick)="onEditContact(contact.email)"></p-button>
+          </td>
+          <td>
+            <p-button icon="pi pi-trash" (onClick)="onDeleteConfirm(contact.email)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 
 </div>

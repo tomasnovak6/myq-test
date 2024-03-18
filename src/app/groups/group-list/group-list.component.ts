@@ -7,7 +7,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 
 export interface IGroup {
   id: number;
@@ -57,22 +57,22 @@ export class GroupListComponent implements OnInit {
     this.formShown = true;
   }
 
-  public onEditGroup(id: number): void {
+  public onEditGroup(name: string): void {
     this.formShown = true;
   }
 
-  public onDeleteConfirm(id: number): void {
+  public onDeleteConfirm(name: string): void {
     this.confirmationService.confirm({
       header: this.transateService.instant('groups.operations.delete.header'),
       message: this.transateService.instant('groups.operations.delete.message'),
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.onDeleteGroup(id);
+        this.onDeleteGroup(name);
       },
     });
   }
 
-  public onDeleteGroup(id: number): void {
+  public onDeleteGroup(name: string): void {
     this.messageService.add({severity: 'success', summary: this.transateService.instant('groups.operations.delete.success')});
   }
 

@@ -8,7 +8,9 @@
     "headline": "Contacts",
     "fullname": "Full name",
     "email": "E-mail",
-    "phone": "Phone"
+    "phone": "Phone",
+    "group": "Group",
+    "tags": "Tags"
   },
   "groups": {
     "headline": "Groups",
