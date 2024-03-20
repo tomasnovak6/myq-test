@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {IContactsData} from "../model/i-contacts-data";
+import {IContacts} from "../model/i-contacts";
+import {IGroups} from "../model/i-groups";
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,13 @@ export class CsvConverterService {
 
   constructor() { }
 
-  convertCsvToJson(csvData: string): IContactsData[] {
+  public convertCsvToJson(csvData: string): IContacts[]{
     const lines: string[] = csvData.split('\n');
-    const jsonData: IContactsData[] = [];
+    const contacts: IContacts[] = [];
 
     for (let i = 1; i < lines.length; i++) {
       const data: string[] = lines[i].split(';');
-      const entry: IContactsData = {
+      const entry: IContacts = {
         fullname: data[0],
         email: data[1],
         phone: data[2],
@@ -22,10 +23,18 @@ export class CsvConverterService {
         tags: data[4].split('#').filter(tag => tag !== '')
       };
 
-      jsonData.push(entry);
+      contacts.push(entry);
     }
 
-    return jsonData;
+    // const uniqueGroups = [...new Set(contacts.map(contact => contact.group))];
+    // const groups: IGroups[] = uniqueGroups.map(group => ({ "name": group }));
+    //
+    // console.log('jsonData', contacts);
+    // console.log('groups', groups);
+    //
+    // const result = [contacts, groups];
+
+    return contacts;
   }
 
 }

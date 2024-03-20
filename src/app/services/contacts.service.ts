@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {CSV_DATA} from "../data-export";
 import {CsvConverterService} from "./csv-converter.service";
-import {IContactsData} from "../model/i-contacts-data";
+import {IContacts} from "../model/i-contacts";
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +13,8 @@ export class ContactsService {
     private csvConterterService: CsvConverterService,
   ) { }
 
-  getCsvContactsData(): Observable<IContactsData[]> {
-    const csvContactsData: string = CSV_DATA;
-    const jsonContactsData: IContactsData[] = this.csvConterterService.convertCsvToJson(csvContactsData);
-    const jsonObs: Observable<IContactsData[]> = of(jsonContactsData);
-
-    return jsonObs;
+  getContacts(): Observable<IContacts[]> {
+    const jsonContactsData: IContacts[] = this.csvConterterService.convertCsvToJson(CSV_DATA);
+    return of(jsonContactsData);
   }
 }

@@ -1,4 +1,4 @@
-export interface IContactsData {
+export interface IContacts {
   fullname: string;
   email: string;
   phone: string;

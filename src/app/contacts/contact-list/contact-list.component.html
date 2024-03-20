@@ -7,7 +7,7 @@
     <p-button
       icon="pi pi-plus"
       [label]="'common.create' | translate"
-      (onClick)="onCreateContact()"
+      (onClick)="onFormOpen('create')"
     ></p-button>
   </div>
 
@@ -44,3 +44,10 @@
   </div>
 
 </div>
+
+<!-- detail dialog -->
+<app-contact-form
+  [formShown]="formShown"
+  (close)="onFormClose()"
+></app-contact-form>
+<!-- /detail dialog -->

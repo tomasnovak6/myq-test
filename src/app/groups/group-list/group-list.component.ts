@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TableModule} from "primeng/table";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
@@ -8,11 +8,8 @@ import {ToastModule} from "primeng/toast";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-
-export interface IGroup {
-  id: number;
-  name: string;
-}
+import {IGroups} from "../../model/i-groups";
+import {GroupFormComponent} from "../group-form/group-form.component";
 
 @Component({
   selector: 'app-group-list',
@@ -25,7 +22,8 @@ export interface IGroup {
     ToastModule,
     DialogModule,
     InputTextModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GroupFormComponent
   ],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.scss',
@@ -34,31 +32,30 @@ export interface IGroup {
 export class GroupListComponent implements OnInit {
 
   public formShown: boolean = false;
-  public formGroup = this.fb.group({
-    name: ['', Validators.required]
-  });
+  public formType: 'create' | 'edit' = 'create';
 
-  public groups: IGroup[] = [
-    {id: 1, name: 'Skupina 1'},
-    {id: 2, name: 'Skupina 2'}
-  ];
+  @Input() groups: IGroups[] = []
 
   constructor(
     private transateService: TranslateService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private fb: FormBuilder
   ) {}
 
   public ngOnInit(): void {
   }
 
-  public onCreateGroup(): void {
+  public onFormOpen(type: 'create' | 'edit'): void {
     this.formShown = true;
+    this.formType = type;
+  }
+
+  public onFormClose(): void {
+    this.formShown = false;
   }
 
   public onEditGroup(name: string): void {
-    this.formShown = true;
+    this.onFormOpen('edit');
   }
 
   public onDeleteConfirm(name: string): void {

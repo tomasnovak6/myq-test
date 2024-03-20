@@ -3,8 +3,9 @@ import {TreeTableModule} from "primeng/treetable";
 import {TranslateModule} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
-import {IContactsData} from "../../model/i-contacts-data";
+import {IContacts} from "../../model/i-contacts";
 import {TreeNode} from "primeng/api";
+import {ContactFormComponent} from "../contact-form/contact-form.component";
 
 @Component({
   selector: 'app-contact-list',
@@ -13,14 +14,18 @@ import {TreeNode} from "primeng/api";
     TreeTableModule,
     TranslateModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    ContactFormComponent
   ],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.scss'
 })
 export class ContactListComponent implements OnInit {
 
-  @Input() contacts: IContactsData[] = [];
+  public formShown: boolean = false;
+  public formType: 'create' | 'edit' = 'create';
+
+  @Input() contacts: IContacts[] = [];
 
   constructor() {}
 
@@ -28,8 +33,13 @@ export class ContactListComponent implements OnInit {
 
   }
 
-  public onCreateContact(): void {
-    console.log('onCreateContact');
+  public onFormOpen(type: 'create' | 'edit'): void {
+    this.formShown = true;
+    this.formType = type;
+  }
+
+  public onFormClose(): void {
+    this.formShown = false;
   }
 
   public onEditContact(email: string): void {

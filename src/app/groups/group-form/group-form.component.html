@@ -1,0 +1,16 @@
+<p-dialog
+  header="Header"
+  [(visible)]="formShown"
+  (onHide)="onClose()"
+  [style]="{width: '50vw'}"
+>
+  <form [formGroup]="formGroup">
+    <div class="row">
+      <label for="name">{{ 'groups.name' | translate }}:</label>
+      <input type="text" pInputText formControlName="name" id="name" />
+    </div>
+    <div class="row">
+      <p-button type="submit" icon="pi pi-check" [label]="'common.edit' | translate"></p-button>
+    </div>
+  </form>
+</p-dialog>

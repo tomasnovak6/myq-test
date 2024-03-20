@@ -4,8 +4,10 @@ import {ContactListComponent} from "./contacts/contact-list/contact-list.compone
 import {GroupListComponent} from "./groups/group-list/group-list.component";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {IContactsData} from "./model/i-contacts-data";
+import {IContacts} from "./model/i-contacts";
 import {ContactsService} from "./services/contacts.service";
+import {IGroups} from "./model/i-groups";
+import {GroupsService} from "./services/groups.service";
 
 @Component({
   selector: 'app-root',
@@ -17,11 +19,13 @@ import {ContactsService} from "./services/contacts.service";
 export class AppComponent implements OnInit {
   title: string = 'MyQ test example';
 
-  public contacts: IContactsData[] = [];
+  public contacts: IContacts[] = [];
+  public groups: IGroups[] = [];
 
   constructor(
     translate: TranslateService,
-    private contactsService: ContactsService
+    private contactsService: ContactsService,
+    private groupsService: GroupsService
   ) {
     const currentLanguage: 'en' | 'cs' = 'en';
     translate.setDefaultLang(currentLanguage);
@@ -30,11 +34,18 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getContactsData();
+    this.getGroupsData();
   }
 
   private getContactsData(): void {
-    this.contactsService.getCsvContactsData().subscribe(contacts => {
+    this.contactsService.getContacts().subscribe(contacts => {
       this.contacts = contacts;
+    });
+  }
+
+  private getGroupsData(): void {
+    this.groupsService.getGroups().subscribe(groups => {
+      this.groups = groups;
     });
   }
 

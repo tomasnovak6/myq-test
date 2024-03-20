@@ -1,0 +1,33 @@
+<p-dialog
+  header="Header"
+  [(visible)]="formShown"
+  (onHide)="onClose()"
+  [style]="{width: '50vw'}"
+>
+  <form [formGroup]="formGroup">
+    <div class="row">
+      <label for="fullname">{{ 'contacts.fullname' | translate }}:</label>
+      <input type="text" pInputText formControlName="fullname" id="fullname" />
+    </div>
+    <div class="row">
+      <label for="email">{{ 'contacts.email' | translate }}</label>
+      <input type="text" pInputText formControlName="email" id="email" />
+    </div>
+    <div class="row">
+      <label for="phone">{{ 'contacts.phone' | translate }}</label>
+      <input type="text" pInputText formControlName="phone" id="phone" />
+    </div>
+    <div class="row">
+      <label for="group">{{ 'contacts.phone' | translate }}</label>
+      <input type="text" pInputText formControlName="group" id="group" />
+    </div>
+    <div class="row">
+      <label for="tags">{{ 'contacts.tags' | translate }}</label>
+      <input type="text" pInputText formControlName="tags" id="tags" />
+    </div>
+    <div class="row">
+      <p-button type="submit" icon="pi pi-check" [label]="'common.edit' | translate"></p-button>
+    </div>
+  </form>
+</p-dialog>
+
