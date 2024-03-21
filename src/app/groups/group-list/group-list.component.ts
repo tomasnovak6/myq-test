@@ -10,6 +10,9 @@ import {InputTextModule} from "primeng/inputtext";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IGroups} from "../../model/i-groups";
 import {GroupFormComponent} from "../group-form/group-form.component";
+import {select, Store} from "@ngrx/store";
+import * as GroupActions from './../../store/group.actions';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-group-list',
@@ -34,15 +37,24 @@ export class GroupListComponent implements OnInit {
   public formShown: boolean = false;
   public formType: 'create' | 'edit' = 'create';
 
-  @Input() groups: IGroups[] = []
+  // @Input() groups: IGroups[] = []
+
+  groups: IGroups[] = []
+  groups$!: Observable<IGroups[]>;
 
   constructor(
     private transateService: TranslateService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private store: Store<{ groups: IGroups[] }>
   ) {}
 
   public ngOnInit(): void {
+    this.store.dispatch(GroupActions.loadGroups());
+    this.groups$ = this.store.pipe(select('groups'));
+    this.groups$.subscribe(result => {
+      console.log('result', result);
+    })
   }
 
   public onFormOpen(type: 'create' | 'edit'): void {

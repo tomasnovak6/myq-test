@@ -17,11 +17,12 @@ export class GroupsService {
   public getGroups(): Observable<IGroups[]> {
     const jsonContactsData: IContacts[] = this.csvConterterService.convertCsvToJson(CSV_DATA);
 
+    console.log('CSV_DATA', CSV_DATA);
+
     const uniqueGroups: string[] = [...new Set(jsonContactsData.map(contact => contact.group))];
     const groups: IGroups[] = uniqueGroups.map(group => ({ "name": group }));
 
-    // console.log('jsonData', jsonContactsData);
-    // console.log('groups', groups);
+    console.log('groups', groups);
 
     return of(groups);
   }

@@ -8,11 +8,12 @@ import {IContacts} from "./model/i-contacts";
 import {ContactsService} from "./services/contacts.service";
 import {IGroups} from "./model/i-groups";
 import {GroupsService} from "./services/groups.service";
+import {GroupsComponent} from "./groups/groups.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ContactListComponent, GroupListComponent, ConfirmDialogModule],
+  imports: [RouterOutlet, ContactListComponent, GroupListComponent, ConfirmDialogModule, GroupsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
