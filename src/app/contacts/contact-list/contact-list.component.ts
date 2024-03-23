@@ -1,11 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TreeTableModule} from "primeng/treetable";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {IContacts} from "../../model/i-contacts";
-import {TreeNode} from "primeng/api";
+import {ConfirmationService, MessageService, TreeNode} from "primeng/api";
 import {ContactFormComponent} from "../contact-form/contact-form.component";
+import {ToastModule} from "primeng/toast";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {LocalStorageService} from "../../services/local-storage.service";
 
 @Component({
   selector: 'app-contact-list',
@@ -15,10 +18,13 @@ import {ContactFormComponent} from "../contact-form/contact-form.component";
     TranslateModule,
     ButtonModule,
     TableModule,
-    ContactFormComponent
+    ContactFormComponent,
+    ToastModule,
+    ConfirmDialogModule
   ],
   templateUrl: './contact-list.component.html',
-  styleUrl: './contact-list.component.scss'
+  styleUrl: './contact-list.component.scss',
+  providers: [ConfirmationService]
 })
 export class ContactListComponent implements OnInit {
 
@@ -26,8 +32,13 @@ export class ContactListComponent implements OnInit {
   public formType: 'create' | 'edit' = 'create';
 
   @Input() contacts: IContacts[] = [];
+  @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() {}
+  constructor(
+    private translateService: TranslateService,
+    private confirmationService: ConfirmationService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   public ngOnInit(): void {
 
@@ -47,7 +58,22 @@ export class ContactListComponent implements OnInit {
   }
 
   public onDeleteConfirm(email: string): void {
-    console.log('onDeleteConfirm');
+    this.confirmationService.confirm({
+      header: this.translateService.instant('contacts.operations.delete.header'),
+      message: this.translateService.instant('contacts.operations.delete.message'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this.onDeleteContact(email);
+      },
+    });
+
+  }
+
+  public onDeleteContact(email: string): void {
+    this.toastMessage.emit('contacts.operations.delete.success');
   }
 
 }

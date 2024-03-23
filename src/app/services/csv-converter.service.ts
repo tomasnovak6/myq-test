@@ -26,14 +26,6 @@ export class CsvConverterService {
       contacts.push(entry);
     }
 
-    // const uniqueGroups = [...new Set(contacts.map(contact => contact.group))];
-    // const groups: IGroups[] = uniqueGroups.map(group => ({ "name": group }));
-    //
-    // console.log('jsonData', contacts);
-    // console.log('groups', groups);
-    //
-    // const result = [contacts, groups];
-
     return contacts;
   }
 

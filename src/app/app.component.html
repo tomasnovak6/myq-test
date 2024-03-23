@@ -1,21 +1,21 @@
 <main class="main">
   <div class="container-fluid">
-    <div class="row">
+    <header class="header row">
       <h1 class="text-center">{{ title }}</h1>
-    </div>
+    </header>
 
-    <div class="row">
+    <section class="row">
       <div class="col-6">
-        <app-contact-list [contacts]="contacts"></app-contact-list>
+        <app-contact-list (toastMessage)="showToastMessage($event)" [contacts]="contacts"></app-contact-list>
       </div>
       <div class="col-6">
-        <app-group-list></app-group-list>
-
-        <app-groups></app-groups>
+        <app-group-list (toastMessage)="showToastMessage($event)"></app-group-list>
       </div>
-    </div>
+    </section>
 
     <router-outlet />
+
+    <p-toast></p-toast>
 
   </div>
 </main>

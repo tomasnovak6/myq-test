@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {TableModule} from "primeng/table";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
@@ -7,12 +7,11 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 import {IGroups} from "../../model/i-groups";
 import {GroupFormComponent} from "../group-form/group-form.component";
-import {select, Store} from "@ngrx/store";
-import * as GroupActions from './../../store/group.actions';
-import {Observable} from "rxjs";
+import {LocalStorageService} from "../../services/local-storage.service";
+import {GroupsService} from "../../services/groups.service";
 
 @Component({
   selector: 'app-group-list',
@@ -30,31 +29,30 @@ import {Observable} from "rxjs";
   ],
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.scss',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService]
 })
 export class GroupListComponent implements OnInit {
 
   public formShown: boolean = false;
   public formType: 'create' | 'edit' = 'create';
 
-  // @Input() groups: IGroups[] = []
-
-  groups: IGroups[] = []
-  groups$!: Observable<IGroups[]>;
+  groups: IGroups[] = [];
+  @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private transateService: TranslateService,
+    private translateService: TranslateService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private store: Store<{ groups: IGroups[] }>
-  ) {}
+    private groupsService: GroupsService,
+    private localStorageService: LocalStorageService
+  ) {
+
+  }
 
   public ngOnInit(): void {
-    this.store.dispatch(GroupActions.loadGroups());
-    this.groups$ = this.store.pipe(select('groups'));
-    this.groups$.subscribe(result => {
-      console.log('result', result);
-    })
+    this.groups = this.groupsService.getGroups();
+    if (this.groups) {
+      this.localStorageService.setItemObject('groups_local', this.groups);
+    }
   }
 
   public onFormOpen(type: 'create' | 'edit'): void {
@@ -72,9 +70,12 @@ export class GroupListComponent implements OnInit {
 
   public onDeleteConfirm(name: string): void {
     this.confirmationService.confirm({
-      header: this.transateService.instant('groups.operations.delete.header'),
-      message: this.transateService.instant('groups.operations.delete.message'),
-      icon: 'pi pi-info-circle',
+      header: this.translateService.instant('groups.operations.delete.header'),
+      message: this.translateService.instant('groups.operations.delete.message'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
       accept: () => {
         this.onDeleteGroup(name);
       },
@@ -82,7 +83,7 @@ export class GroupListComponent implements OnInit {
   }
 
   public onDeleteGroup(name: string): void {
-    this.messageService.add({severity: 'success', summary: this.transateService.instant('groups.operations.delete.success')});
+    this.toastMessage.emit('groups.operations.delete.success');
   }
 
 }

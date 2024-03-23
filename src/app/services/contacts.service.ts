@@ -13,8 +13,8 @@ export class ContactsService {
     private csvConterterService: CsvConverterService,
   ) { }
 
-  getContacts(): Observable<IContacts[]> {
+  getContacts(): IContacts[] {
     const jsonContactsData: IContacts[] = this.csvConterterService.convertCsvToJson(CSV_DATA);
-    return of(jsonContactsData);
+    return jsonContactsData;
   }
 }

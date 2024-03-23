@@ -4,7 +4,7 @@
   (onHide)="onClose()"
   [style]="{width: '50vw'}"
 >
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="row">
       <label for="name">{{ 'groups.name' | translate }}:</label>
       <input type="text" pInputText formControlName="name" id="name" />

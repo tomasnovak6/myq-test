@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {RouterOutlet} from '@angular/router';
 import {ContactListComponent} from "./contacts/contact-list/contact-list.component";
 import {GroupListComponent} from "./groups/group-list/group-list.component";
 import {TranslateService} from "@ngx-translate/core";
@@ -7,15 +7,16 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {IContacts} from "./model/i-contacts";
 import {ContactsService} from "./services/contacts.service";
 import {IGroups} from "./model/i-groups";
-import {GroupsService} from "./services/groups.service";
-import {GroupsComponent} from "./groups/groups.component";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ContactListComponent, GroupListComponent, ConfirmDialogModule, GroupsComponent],
+  imports: [RouterOutlet, ContactListComponent, GroupListComponent, ConfirmDialogModule, ToastModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  providers: [MessageService]
 })
 export class AppComponent implements OnInit {
   title: string = 'MyQ test example';
@@ -24,30 +25,38 @@ export class AppComponent implements OnInit {
   public groups: IGroups[] = [];
 
   constructor(
-    translate: TranslateService,
+    private translateService: TranslateService,
+    private messageService: MessageService,
     private contactsService: ContactsService,
-    private groupsService: GroupsService
   ) {
     const currentLanguage: 'en' | 'cs' = 'en';
-    translate.setDefaultLang(currentLanguage);
-    translate.use(currentLanguage);
+    translateService.setDefaultLang(currentLanguage);
+    translateService.use(currentLanguage);
   }
 
   public ngOnInit(): void {
     this.getContactsData();
-    this.getGroupsData();
+
   }
 
   private getContactsData(): void {
-    this.contactsService.getContacts().subscribe(contacts => {
-      this.contacts = contacts;
-    });
+    this.contacts = this.contactsService.getContacts();
   }
 
-  private getGroupsData(): void {
-    this.groupsService.getGroups().subscribe(groups => {
-      this.groups = groups;
-    });
+  public showToastMessage(message: string): void {
+    this.messageService.add({severity: 'success', summary: this.translateService.instant(message)});
   }
+
+  // public deleteGroup(name: string): void {
+  //   this.groups = this.groupsService.deleteGroup(name);
+  // }
+  //
+  // public editGroup(name: string): void {
+  //   this.groups = this.groupsService.editGroup('a', 'b');
+  // }
+  //
+  // public createGroup(name: string): void {
+  //
+  // }
 
 }

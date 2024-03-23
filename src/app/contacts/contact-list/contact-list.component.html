@@ -1,9 +1,9 @@
 <div class="container-fluid">
-  <div class="row">
+  <div class="row mt-5">
     <h2>{{ 'contacts.headline' | translate }}</h2>
   </div>
 
-  <div class="row">
+  <div class="row mt-3">
     <p-button
       icon="pi pi-plus"
       [label]="'common.create' | translate"
@@ -11,7 +11,7 @@
     ></p-button>
   </div>
 
-  <div class="row">
+  <div class="row mt-5">
     <!-- <p-treeTable></p-treeTable> -->
     <p-table [value]="contacts">
       <ng-template pTemplate="header">
@@ -21,8 +21,8 @@
           <th>{{ 'contacts.phone' | translate }}</th>
           <th>{{ 'contacts.group' | translate }}</th>
           <th>{{ 'contacts.tags' | translate }}</th>
-          <th>{{ 'common.edit' | translate }}</th>
-          <th>{{ 'common.delete' | translate }}</th>
+          <th style="width: 10%">{{ 'common.edit' | translate }}</th>
+          <th style="width: 10%">{{ 'common.delete' | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-contact>
@@ -33,10 +33,10 @@
           <td>{{ contact.group }}</td>
           <td>{{ contact.tags }}</td>
           <td>
-            <p-button icon="pi pi-pencil" (onClick)="onEditContact(contact.email)"></p-button>
+            <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditContact(contact.email)"></p-button>
           </td>
           <td>
-            <p-button icon="pi pi-trash" (onClick)="onDeleteConfirm(contact.email)"></p-button>
+            <p-button icon="pi pi-trash" [outlined]="true" (onClick)="onDeleteConfirm(contact.email)"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -44,6 +44,8 @@
   </div>
 
 </div>
+
+<p-confirmDialog></p-confirmDialog>
 
 <!-- detail dialog -->
 <app-contact-form

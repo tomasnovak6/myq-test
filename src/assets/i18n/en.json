@@ -10,7 +10,18 @@
     "email": "E-mail",
     "phone": "Phone",
     "group": "Group",
-    "tags": "Tags"
+    "tags": "Tags",
+    "operations": {
+      "delete": {
+        "header": "Delete contact",
+        "message": "Do you want do delete this contact?",
+        "success": "The contact was successfully deleted."
+      },
+      "edit": {
+        "header": "Edit contact",
+        "success": "The contact was successfully editer."
+      }
+    }
   },
   "groups": {
     "headline": "Groups",
