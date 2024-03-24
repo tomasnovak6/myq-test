@@ -29,7 +29,11 @@
       },
       "edit": {
         "header": "Edit contact",
-        "success": "The contact was successfully editer."
+        "success": "The contact was successfully edited."
+      },
+      "create": {
+        "header": "Create contact",
+        "success": "The contact was successfully created."
       }
     }
   },

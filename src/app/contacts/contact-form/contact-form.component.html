@@ -1,10 +1,10 @@
 <p-dialog
-  header="Header"
+  [header]="'contacts.operations.' + formType + '.header' | translate"
   [(visible)]="formShown"
   (onHide)="onClose()"
-  [style]="{width: '50vw'}"
+  [style]="{width: '25vw', height: '700px'}"
 >
-  <form [formGroup]="formGroup">
+  <form [formGroup]="contactForm">
     <div class="row">
       <label for="fullname">{{ 'contacts.fullname' | translate }}:</label>
       <input type="text" pInputText formControlName="fullname" id="fullname" />

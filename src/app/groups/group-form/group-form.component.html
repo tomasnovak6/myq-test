@@ -1,5 +1,5 @@
 <p-dialog
-  header="Header"
+  [header]="'groups.operations.' + formType + '.header' | translate"
   [(visible)]="formShown"
   (onHide)="onClose()"
   [style]="{width: '25vw', height: '300px'}"

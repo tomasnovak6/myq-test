@@ -27,36 +27,16 @@ export class AppComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private messageService: MessageService,
-    private contactsService: ContactsService,
   ) {
     const currentLanguage: 'en' | 'cs' = 'en';
     translateService.setDefaultLang(currentLanguage);
     translateService.use(currentLanguage);
   }
 
-  public ngOnInit(): void {
-    this.getContactsData();
-
-  }
-
-  private getContactsData(): void {
-    this.contacts = this.contactsService.getContacts();
-  }
+  public ngOnInit(): void {}
 
   public showToastMessage(message: string): void {
     this.messageService.add({severity: 'success', summary: this.translateService.instant(message)});
   }
-
-  // public deleteGroup(name: string): void {
-  //   this.groups = this.groupsService.deleteGroup(name);
-  // }
-  //
-  // public editGroup(name: string): void {
-  //   this.groups = this.groupsService.editGroup('a', 'b');
-  // }
-  //
-  // public createGroup(name: string): void {
-  //
-  // }
 
 }

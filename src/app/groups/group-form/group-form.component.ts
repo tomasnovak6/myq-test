@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {TranslateModule} from "@ngx-translate/core";
 import {NgIf} from "@angular/common";
 import {GroupsService} from "../../services/groups.service";
+import {CommonService} from "../../services/common.service";
 
 @Component({
   selector: 'app-group-form',
@@ -36,7 +37,8 @@ export class GroupFormComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private groupsService: GroupsService
+    private groupsService: GroupsService,
+    private commonService: CommonService,
   ) {
     this.groupForm = this.fb.group({
       name: ['', Validators.required]
@@ -69,20 +71,9 @@ export class GroupFormComponent implements OnInit, OnChanges {
       }
 
       this.onClose();
-
     } else {
-      this.markFormGroupTouched(this.groupForm);
+      this.commonService.markFormGroupTouched(this.groupForm);
     }
-  }
-
-  private markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      }
-    });
   }
 
 }

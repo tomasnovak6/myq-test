@@ -73,7 +73,7 @@ export class GroupsService {
     return this.localStorageService.getItemObject(this.localStorageKey);
   }
 
-  private setLocalStorageData(groups: IGroups[]) {
+  private setLocalStorageData(groups: IGroups[]): void {
     if (groups) {
       this.localStorageService.setItemObject(this.localStorageKey, groups);
     }

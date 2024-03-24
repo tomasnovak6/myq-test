@@ -10,7 +10,6 @@ import {InputTextModule} from "primeng/inputtext";
 import {ReactiveFormsModule} from "@angular/forms";
 import {IGroups} from "../../model/i-groups";
 import {GroupFormComponent} from "../group-form/group-form.component";
-import {LocalStorageService} from "../../services/local-storage.service";
 import {GroupsService} from "../../services/groups.service";
 
 @Component({
@@ -72,7 +71,6 @@ export class GroupListComponent implements OnInit {
 
   public onEditGroup(type: 'create' | 'edit', name: string): void {
     this.onFormOpen(type, name);
-    this.formName = name;
   }
 
   public onDeleteGroup(name: string): void {
