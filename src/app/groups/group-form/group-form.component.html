@@ -2,15 +2,19 @@
   header="Header"
   [(visible)]="formShown"
   (onHide)="onClose()"
-  [style]="{width: '50vw'}"
+  [style]="{width: '25vw', height: '300px'}"
 >
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <label for="name">{{ 'groups.name' | translate }}:</label>
       <input type="text" pInputText formControlName="name" id="name" />
+      <ng-container *ngIf="groupForm.get('name')?.invalid && groupForm.get('name')?.touched">
+        <span *ngIf="groupForm.get('name')?.errors?.['required']" class="error-message">{{ 'common.validations.required.name' | translate }}</span>
+      </ng-container>
     </div>
-    <div class="row">
-      <p-button type="submit" icon="pi pi-check" [label]="'common.edit' | translate"></p-button>
+
+    <div class="row submit-wrap">
+      <p-button type="submit" icon="pi pi-check" [label]="'common.' + formType | translate"></p-button>
     </div>
   </form>
 </p-dialog>

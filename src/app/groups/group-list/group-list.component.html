@@ -1,3 +1,15 @@
+<p-confirmDialog></p-confirmDialog>
+
+<!-- detail dialog -->
+<app-group-form
+  [formShown]="formShown"
+  [formType]="formType"
+  [formName]="formName"
+  (close)="onFormClose()"
+  (toastMessage)="toastMessage.emit($event)"
+></app-group-form>
+<!-- /detail dialog -->
+
 <div class="container-fluid">
   <div class="row mt-5">
     <h2>{{ 'groups.headline' | translate }}</h2>
@@ -7,7 +19,7 @@
     <p-button
       icon="pi pi-plus"
       [label]="'common.create' | translate"
-      (onClick)="onFormOpen('create')"
+      (onClick)="onFormOpen('create', '')"
     ></p-button>
   </div>
 
@@ -24,10 +36,10 @@
         <tr>
           <td>{{ group.name }}</td>
           <td>
-            <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditGroup(group.name)"></p-button>
+            <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditGroup('edit', group.name)"></p-button>
           </td>
           <td>
-            <p-button icon="pi pi-trash" [outlined]="true" (onClick)="onDeleteConfirm(group.name)"></p-button>
+            <p-button icon="pi pi-trash" [outlined]="true" (onClick)="onDeleteGroup(group.name)"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -35,12 +47,3 @@
   </div>
 
 </div>
-
-<p-confirmDialog></p-confirmDialog>
-
-<!-- detail dialog -->
-<app-group-form
-  [formShown]="formShown"
-  (close)="onFormClose()"
-></app-group-form>
-<!-- /detail dialog -->

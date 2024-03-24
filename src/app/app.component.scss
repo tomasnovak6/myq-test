@@ -1,5 +1,7 @@
+@import './colors';
+
 .header {
   padding: 2em 0;
-  background-color: #002da7;
-  color: #ffffff;
+  background-color: $color-dark-blue;
+  color: $color-white;
 }

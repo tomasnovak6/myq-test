@@ -2,7 +2,17 @@
   "common": {
     "create": "Create",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "validations": {
+      "required": {
+        "name": "Name is required.",
+        "fullname": "Full name is required.",
+        "email": "E-mail is required."
+      },
+      "email": {
+        "email": "E-mail is in the wrong format."
+      }
+    }
   },
   "contacts": {
     "headline": "Contacts",
@@ -35,6 +45,10 @@
       "edit": {
         "header": "Edit group",
         "success": "The group was successfully edited."
+      },
+      "create": {
+        "header": "Create group",
+        "success": "The group was successfully created"
       }
     }
   }

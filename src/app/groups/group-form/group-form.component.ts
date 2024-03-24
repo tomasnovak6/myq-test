@@ -1,60 +1,88 @@
-import {Component, Input, OnInit, Output, EventEmitter, Inject} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
-import {DOCUMENT} from "@angular/common";
-import {LocalStorageService} from "../../services/local-storage.service";
+import {NgIf} from "@angular/common";
+import {GroupsService} from "../../services/groups.service";
 
 @Component({
   selector: 'app-group-form',
   standalone: true,
     imports: [
-        ButtonModule,
-        DialogModule,
-        InputTextModule,
-        ReactiveFormsModule,
-        TranslateModule
+      NgIf,
+      ButtonModule,
+      DialogModule,
+      InputTextModule,
+      ReactiveFormsModule,
+      TranslateModule
     ],
   templateUrl: './group-form.component.html',
-  styleUrl: './group-form.component.scss'
+  styleUrl: './group-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupFormComponent implements OnInit {
+export class GroupFormComponent implements OnInit, OnChanges {
 
   @Input() formShown: boolean = false;
-  @Output() formShownEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() formType: 'create' | 'edit' = 'create';
+  @Input() formName: string = '';
+  private nameValueOrig: string = '';
 
-  public formGroup = this.fb.group({
-    name: ['', Validators.required]
-  });
+  groupForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private localStorageService: LocalStorageService
+    private groupsService: GroupsService
   ) {
-
+    this.groupForm = this.fb.group({
+      name: ['', Validators.required]
+    });
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {}
 
+  ngOnChanges(): void {
+    if (this.formType === 'edit') {
+      this.nameValueOrig = this.formName;
+      this.groupForm.get('name')?.setValue(this.nameValueOrig);
+    }
   }
 
   public onClose(): void {
-    this.formShownEvent.emit(false);
+    this.close.emit(true);
   }
 
   public onSubmit(): void {
-    // if (this.formGroup.valid) {
-    //   const nameValue = this.formGroup.value.name as string;
-    //   this.groupEdit.emit({oldValue: this.nameEdit, newValue: nameValue})
-    // } else {
-    //   this.formGroup.markAsTouched();
-    // }
+    if (this.groupForm.valid) {
+      const nameNew: string = this.groupForm.get('name')!.value;
 
-    // console.log('local', this.localStorageService.getItemObject('groups_local'));
+      if (this.formType === 'create') {
+        this.groupsService.createGroup(nameNew);
+        this.toastMessage.emit('groups.operations.create.success');
+      } else if (this.formType === 'edit') {
+        this.groupsService.editGroup(this.nameValueOrig, nameNew);
+        this.toastMessage.emit('groups.operations.edit.success');
+      }
+
+      this.onClose();
+
+    } else {
+      this.markFormGroupTouched(this.groupForm);
+    }
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 
 }

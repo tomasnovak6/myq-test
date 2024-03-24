@@ -35,6 +35,7 @@ export class GroupListComponent implements OnInit {
 
   public formShown: boolean = false;
   public formType: 'create' | 'edit' = 'create';
+  public formName: string = '';
 
   groups: IGroups[] = [];
   @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
@@ -42,33 +43,39 @@ export class GroupListComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private confirmationService: ConfirmationService,
-    private groupsService: GroupsService,
-    private localStorageService: LocalStorageService
+    private groupsService: GroupsService
   ) {
 
   }
 
   public ngOnInit(): void {
-    this.groups = this.groupsService.getGroups();
-    if (this.groups) {
-      this.localStorageService.setItemObject('groups_local', this.groups);
-    }
+    this.getData();
   }
 
-  public onFormOpen(type: 'create' | 'edit'): void {
+  private getData(): void {
+    this.groups = this.groupsService.getGroups();
+  }
+
+  public onFormOpen(type: 'create' | 'edit', name: string): void {
     this.formShown = true;
     this.formType = type;
+    if (this.formType === 'edit') {
+      this.formName = name;
+    }
   }
 
   public onFormClose(): void {
     this.formShown = false;
+    this.formName = '';
+    this.getData();
   }
 
-  public onEditGroup(name: string): void {
-    this.onFormOpen('edit');
+  public onEditGroup(type: 'create' | 'edit', name: string): void {
+    this.onFormOpen(type, name);
+    this.formName = name;
   }
 
-  public onDeleteConfirm(name: string): void {
+  public onDeleteGroup(name: string): void {
     this.confirmationService.confirm({
       header: this.translateService.instant('groups.operations.delete.header'),
       message: this.translateService.instant('groups.operations.delete.message'),
@@ -76,14 +83,11 @@ export class GroupListComponent implements OnInit {
       acceptIcon: 'none',
       rejectIcon: 'none',
       rejectButtonStyleClass: 'p-button-text',
-      accept: () => {
-        this.onDeleteGroup(name);
-      },
+      accept: (): void => {
+        this.groups = this.groupsService.deleteGroup(name);
+        this.toastMessage.emit('groups.operations.delete.success');
+      }
     });
-  }
-
-  public onDeleteGroup(name: string): void {
-    this.toastMessage.emit('groups.operations.delete.success');
   }
 
 }
