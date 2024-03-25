@@ -16,6 +16,7 @@ import {EnumFormType} from "../../model/enum-form-type";
 interface Column {
   field: string;
   header: string;
+  size: string;
 }
 
 @Component({
@@ -56,19 +57,18 @@ export class ContactListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getData();
-
-    this.nodeService.getContactNodesData().then((files) => (this.files = files));
-    this.cols = [
-      { field: 'fullname', header: this.translateService.instant('contacts.fullname') },
-      { field: 'email', header: this.translateService.instant('contacts.email') },
-      { field: 'phone', header: this.translateService.instant('contacts.phone')},
-      { field: 'tags', header: this.translateService.instant('contacts.tags')},
-      { field: '', header: '' }
-    ];
   }
 
   public getData(): void {
     this.contacts = this.contactsService.getContacts();
+    this.nodeService.getContactNodesData().then((files) => (this.files = files));
+    this.cols = [
+      { field: 'fullname', header: this.translateService.instant('contacts.fullname'), size: '35%' },
+      { field: 'email', header: this.translateService.instant('contacts.email'), size: '20%' },
+      { field: 'phone', header: this.translateService.instant('contacts.phone'), size: '15%'},
+      { field: 'tags', header: this.translateService.instant('contacts.tags'), size: '15%'},
+      { field: '', header: '', size: '15%' }
+    ];
   }
 
   public onFormOpen(type: EnumFormType, email: string): void {

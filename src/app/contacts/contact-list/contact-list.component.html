@@ -24,58 +24,25 @@
   </div>
 
   <div class="row mt-5">
-    <p-table [value]="contacts">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>{{ 'contacts.fullname' | translate }}</th>
-          <th>{{ 'contacts.email' | translate }}</th>
-          <th>{{ 'contacts.phone' | translate }}</th>
-          <th>{{ 'contacts.group' | translate }}</th>
-          <th>{{ 'contacts.tags' | translate }}</th>
-          <th style="width: 6%">{{ 'common.edit' | translate }}</th>
-          <th style="width: 6%">{{ 'common.delete' | translate }}</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-contact>
-        <tr>
-          <td>{{ contact.fullname }}</td>
-          <td>{{ contact.email }}</td>
-          <td>{{ contact.phone }}</td>
-          <td>{{ contact.group }}</td>
-          <td>{{ contact.tags }}</td>
-          <td>
-            <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditContact(EnumFormType.EDIT, contact.email)"></p-button>
-          </td>
-          <td>
-            <p-button icon="pi pi-trash" [outlined]="true" (onClick)="onDeleteContact(contact.email)"></p-button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-
-  <!-- pokus -->
-  <!-- <div class="row mt-5">
     <p-treeTable [value]="files" [columns]="cols" [scrollable]="true">
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns">{{ col.header }}</th>
+          <th *ngFor="let col of columns" [style]="{'width': col.size}">{{ col.header }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
         <tr [ttRow]="rowNode">
-          <td *ngFor="let col of columns; let i = index; let first = first; let last = last">
+          <td *ngFor="let col of columns; let i = index; let first = first; let last = last" [style]="{'width': col.size}">
             <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0 && rowData['type'] === 'Group'"></p-treeTableToggler>
             {{ rowData[col.field] }}
             <ng-container *ngIf="last && rowData['type'] !== 'Group'">
-              <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditContact(EnumFormType.EDIT, rowData['email'])"></p-button>
+              <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditContact(EnumFormType.EDIT, rowData['email'])" [style]="{'margin-right': '1.5em'}"></p-button>
               <p-button icon="pi pi-trash" [outlined]="true" (onClick)="onDeleteContact(rowData['email'])"></p-button>
             </ng-container>
           </td>
         </tr>
       </ng-template>
     </p-treeTable>
-  </div> -->
-  <!-- /pokus -->
+  </div>
 
 </div>

@@ -81,6 +81,11 @@ export class ContactFormComponent implements OnInit, OnChanges {
 
   public onClose(): void {
     this.close.emit(true);
+    this.contactForm.get('fullname')?.setValue('');
+    this.contactForm.get('email')?.setValue('');
+    this.contactForm.get('phone')?.setValue('');
+    this.contactForm.get('group')?.setValue('');
+    this.contactForm.get('tags')?.setValue([]);
   }
 
   public onSubmit(): void {
