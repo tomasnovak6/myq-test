@@ -40,7 +40,7 @@ export class ContactFormComponent implements OnInit, OnChanges {
 
   public groups: IGroups[] = [];
 
-  // todo: newValue neco
+  private contactValueOrig!: IContacts;
 
   public contactForm: FormGroup;
 
@@ -65,6 +65,16 @@ export class ContactFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     if (this.formType === EnumFormType.EDIT) {
+      this.contactValueOrig = this.contactsService.getContact(this.formEmail);
+
+      if (this.contactValueOrig) {
+        this.contactForm.get('fullname')?.setValue(this.contactValueOrig.fullname);
+        this.contactForm.get('email')?.setValue(this.contactValueOrig.email);
+        this.contactForm.get('phone')?.setValue(this.contactValueOrig.phone);
+        this.contactForm.get('group')?.setValue({name: this.contactValueOrig.group});
+        this.contactForm.get('tags')?.setValue(this.contactValueOrig.tags);
+      }
+
       this.groups = this.groupsService.getGroups();
     }
   }
@@ -75,23 +85,19 @@ export class ContactFormComponent implements OnInit, OnChanges {
 
   public onSubmit(): void {
     if (this.contactForm.valid) {
-      const tagsArr: string[] = (this.contactForm.get('tags')!.value).split(',');
-
       const contactNew: IContacts = {
         fullname: this.contactForm.get('fullname')!.value,
         email: this.contactForm.get('email')!.value,
         phone: this.contactForm.get('phone')!.value,
         group: (this.contactForm.get('group')!.value).name,
-        tags: tagsArr
+        tags: this.contactForm.get('tags')!.value
       };
-
-      console.log('contactNew', contactNew);
 
       if (this.formType === EnumFormType.CREATE) {
         this.contactsService.createContact(contactNew);
         this.toastMessage.emit('contacts.operations.create.success');
       } else if (this.formType === EnumFormType.EDIT) {
-
+        this.contactsService.editContact(this.formEmail, contactNew);
         this.toastMessage.emit('contacts.operations.edit.success');
       }
 

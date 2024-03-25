@@ -5,4 +5,6 @@
   position: fixed;
   bottom: 2rem; }
 
-/*# sourceMappingURL=contact-form.component.css.map */
+:host ::ng-deep .dropdown-group {
+  padding-left: 0;
+  padding-right: 0; }

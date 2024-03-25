@@ -5,7 +5,6 @@ import {GroupListComponent} from "./groups/group-list/group-list.component";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {IContacts} from "./model/i-contacts";
-import {ContactsService} from "./services/contacts.service";
 import {IGroups} from "./model/i-groups";
 import {ToastModule} from "primeng/toast";
 import {MessageService} from "primeng/api";

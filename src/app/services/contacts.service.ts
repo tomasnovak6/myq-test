@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from "rxjs";
 import {CSV_DATA} from "../data-export";
 import {CsvConverterService} from "./csv-converter.service";
 import {IContacts} from "../model/i-contacts";
 import {LocalStorageService} from "./local-storage.service";
-import {IGroups} from "../model/i-groups";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +30,16 @@ export class ContactsService {
     return contacts;
   }
 
+  public getContact(email: string): IContacts {
+    let contacts: IContacts[] = this.getLocalStorageData();
+    let contact: IContacts[] = [];
+    if (contacts) {
+      contact = contacts.filter(item => item.email === email);
+    }
+
+    return contact[0];
+  }
+
   public deleteContact(email: string): IContacts[] {
     let contacts: IContacts[] = this.getLocalStorageData();
     if (contacts) {
@@ -52,9 +60,10 @@ export class ContactsService {
 
   public editContact(email: string, itemNew: IContacts): IContacts[] {
     let contacts: IContacts[] = this.getLocalStorageData();
+
     contacts = contacts.map(item => {
       if (item.email === email) {
-        return { ...item, itemNew };
+        return { ...item, ...itemNew };
       }
       return item;
     });

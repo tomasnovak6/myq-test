@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {IContacts} from "../model/i-contacts";
-import {IGroups} from "../model/i-groups";
 
 @Injectable({
   providedIn: 'root'

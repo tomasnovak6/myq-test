@@ -4,3 +4,12 @@
   position: fixed;
   bottom: 2rem;
 }
+
+:host {
+  ::ng-deep {
+    .dropdown-group {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
