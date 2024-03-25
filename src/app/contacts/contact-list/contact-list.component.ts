@@ -46,7 +46,6 @@ export class ContactListComponent implements OnInit {
   public files!: TreeNode[];
   public cols!: Column[];
   public filterMode: string = 'lenient';
-  @ViewChild('tt') tt: TreeTable | undefined;
 
   @Input() contacts: IContacts[] = [];
   @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
@@ -73,10 +72,6 @@ export class ContactListComponent implements OnInit {
       { field: '', header: '', size: '15%' }
     ];
   }
-
-  // applyFilter($event: any, stringVal: any) {
-  //   this.tt!.filter(($event.target as HTMLInputElement).value, stringVal, 'contains');
-  // }
 
   public onFormOpen(type: EnumFormType, email: string): void {
     this.formShown = true;
