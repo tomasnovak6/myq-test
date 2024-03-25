@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TreeTableModule} from "primeng/treetable";
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {TreeTable, TreeTableModule} from "primeng/treetable";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
@@ -12,6 +12,7 @@ import {ContactsService} from "../../services/contacts.service";
 import {NodeService} from "../../services/node.service";
 import {NgFor, NgIf} from "@angular/common";
 import {EnumFormType} from "../../model/enum-form-type";
+import {InputTextModule} from "primeng/inputtext";
 
 interface Column {
   field: string;
@@ -30,7 +31,7 @@ interface Column {
     TableModule,
     ContactFormComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule, InputTextModule
   ],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.scss',
@@ -44,6 +45,8 @@ export class ContactListComponent implements OnInit {
 
   public files!: TreeNode[];
   public cols!: Column[];
+  public filterMode: string = 'lenient';
+  @ViewChild('tt') tt: TreeTable | undefined;
 
   @Input() contacts: IContacts[] = [];
   @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
@@ -70,6 +73,10 @@ export class ContactListComponent implements OnInit {
       { field: '', header: '', size: '15%' }
     ];
   }
+
+  // applyFilter($event: any, stringVal: any) {
+  //   this.tt!.filter(($event.target as HTMLInputElement).value, stringVal, 'contains');
+  // }
 
   public onFormOpen(type: EnumFormType, email: string): void {
     this.formShown = true;

@@ -24,12 +24,24 @@
   </div>
 
   <div class="row mt-5">
-    <p-treeTable [value]="files" [columns]="cols" [scrollable]="true">
+    <p-treeTable #tt [value]="files" [columns]="cols" [scrollable]="true" [filterMode]="filterMode">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" [style]="{'width': col.size}" [ttSortableColumn]="col.field">
             {{ col.header }}
             <p-treeTableSortIcon [field]="col.field" *ngIf="col.field === 'fullname' || col.field === 'email'"></p-treeTableSortIcon>
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let col of cols">
+            <input
+              *ngIf="col.field === 'fullname' || col.field === 'email' || col.field === 'tags'"
+              pInputText
+              #textInput
+              type="text"
+              (input)="tt.filter(textInput.value, col.field, 'contains')"
+              [style]="{'width': '100%'}"
+            />
           </th>
         </tr>
       </ng-template>
