@@ -19,8 +19,17 @@ export class ContactsService {
   private localStorageKey: string = 'contacts_local';
 
   public getContacts(): IContacts[] {
-    const jsonContactsData: IContacts[] = this.csvConterterService.convertCsvToJson(CSV_DATA);
-    return jsonContactsData;
+    let contacts: IContacts[];
+    const localStorageData: IContacts[] = this.getLocalStorageData();
+
+    if (!localStorageData?.length) {
+      contacts = this.csvConterterService.convertCsvToJson(CSV_DATA);
+      this.setLocalStorageData(contacts);
+    } else {
+      contacts = localStorageData;
+    }
+
+    return contacts;
   }
 
   public deleteContact(email: string): IContacts[] {

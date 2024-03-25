@@ -4,29 +4,43 @@
   (onHide)="onClose()"
   [style]="{width: '25vw', height: '700px'}"
 >
-  <form [formGroup]="contactForm">
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <label for="fullname">{{ 'contacts.fullname' | translate }}:</label>
       <input type="text" pInputText formControlName="fullname" id="fullname" />
     </div>
-    <div class="row">
+
+    <div class="row mt-2">
       <label for="email">{{ 'contacts.email' | translate }}</label>
       <input type="text" pInputText formControlName="email" id="email" />
+      <ng-container *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+        <span *ngIf="contactForm.get('email')?.errors?.['required']" class="error-message">{{ 'common.validations.required.email' | translate }}</span>
+      </ng-container>
     </div>
-    <div class="row">
+
+    <div class="row mt-2">
       <label for="phone">{{ 'contacts.phone' | translate }}</label>
       <input type="text" pInputText formControlName="phone" id="phone" />
     </div>
-    <div class="row">
-      <label for="group">{{ 'contacts.phone' | translate }}</label>
-      <input type="text" pInputText formControlName="group" id="group" />
+
+    <div class="row mt-2">
+      <label for="group">{{ 'contacts.group' | translate }}</label>
+      <p-dropdown
+        formControlName="group"
+        id="group"
+        [options]="groups"
+        optionLabel="name"
+        [placeholder]="'contacts.selectGroup' | translate"
+      ></p-dropdown>
     </div>
-    <div class="row">
+
+    <div class="row mr-2">
       <label for="tags">{{ 'contacts.tags' | translate }}</label>
       <input type="text" pInputText formControlName="tags" id="tags" />
     </div>
-    <div class="row">
-      <p-button type="submit" icon="pi pi-check" [label]="'common.edit' | translate"></p-button>
+
+    <div class="row submit-wrap">
+      <p-button type="submit" icon="pi pi-check" [label]="'common.' + formType | translate"></p-button>
     </div>
   </form>
 </p-dialog>

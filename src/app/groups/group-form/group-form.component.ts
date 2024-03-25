@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
@@ -7,6 +7,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {NgIf} from "@angular/common";
 import {GroupsService} from "../../services/groups.service";
 import {CommonService} from "../../services/common.service";
+import {EnumFormType} from "../../model/enum-form-type";
 
 @Component({
   selector: 'app-group-form',
@@ -29,7 +30,7 @@ export class GroupFormComponent implements OnInit, OnChanges {
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() toastMessage: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() formType: 'create' | 'edit' = 'create';
+  @Input() formType: EnumFormType = EnumFormType.CREATE;
   @Input() formName: string = '';
   private nameValueOrig: string = '';
 
@@ -48,7 +49,7 @@ export class GroupFormComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(): void {
-    if (this.formType === 'edit') {
+    if (this.formType === EnumFormType.EDIT) {
       this.nameValueOrig = this.formName;
       this.groupForm.get('name')?.setValue(this.nameValueOrig);
     }
@@ -62,10 +63,10 @@ export class GroupFormComponent implements OnInit, OnChanges {
     if (this.groupForm.valid) {
       const nameNew: string = this.groupForm.get('name')!.value;
 
-      if (this.formType === 'create') {
+      if (this.formType === EnumFormType.CREATE) {
         this.groupsService.createGroup(nameNew);
         this.toastMessage.emit('groups.operations.create.success');
-      } else if (this.formType === 'edit') {
+      } else if (this.formType === EnumFormType.EDIT) {
         this.groupsService.editGroup(this.nameValueOrig, nameNew);
         this.toastMessage.emit('groups.operations.edit.success');
       }

@@ -20,6 +20,7 @@
     "email": "E-mail",
     "phone": "Phone",
     "group": "Group",
+    "selectGroup": "Select a Group",
     "tags": "Tags",
     "operations": {
       "delete": {

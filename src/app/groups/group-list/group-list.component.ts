@@ -3,7 +3,7 @@ import {TableModule} from "primeng/table";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
@@ -11,6 +11,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {IGroups} from "../../model/i-groups";
 import {GroupFormComponent} from "../group-form/group-form.component";
 import {GroupsService} from "../../services/groups.service";
+import {EnumFormType} from "../../model/enum-form-type";
 
 @Component({
   selector: 'app-group-list',
@@ -33,7 +34,7 @@ import {GroupsService} from "../../services/groups.service";
 export class GroupListComponent implements OnInit {
 
   public formShown: boolean = false;
-  public formType: 'create' | 'edit' = 'create';
+  public formType: EnumFormType = EnumFormType.CREATE;
   public formName: string = '';
 
   groups: IGroups[] = [];
@@ -55,7 +56,7 @@ export class GroupListComponent implements OnInit {
     this.groups = this.groupsService.getGroups();
   }
 
-  public onFormOpen(type: 'create' | 'edit', name: string): void {
+  public onFormOpen(type: EnumFormType, name: string): void {
     this.formShown = true;
     this.formType = type;
     if (this.formType === 'edit') {
@@ -69,7 +70,7 @@ export class GroupListComponent implements OnInit {
     this.getData();
   }
 
-  public onEditGroup(type: 'create' | 'edit', name: string): void {
+  public onEditGroup(type: EnumFormType, name: string): void {
     this.onFormOpen(type, name);
   }
 
@@ -88,4 +89,5 @@ export class GroupListComponent implements OnInit {
     });
   }
 
+  protected readonly EnumFormType = EnumFormType;
 }

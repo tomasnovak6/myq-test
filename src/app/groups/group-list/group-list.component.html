@@ -19,7 +19,7 @@
     <p-button
       icon="pi pi-plus"
       [label]="'common.create' | translate"
-      (onClick)="onFormOpen('create', '')"
+      (onClick)="onFormOpen(EnumFormType.CREATE, '')"
     ></p-button>
   </div>
 
@@ -28,15 +28,15 @@
       <ng-template pTemplate="header">
         <tr>
           <th>{{ 'groups.name' | translate }}</th>
-          <th style="width: 10%">{{ 'common.edit' | translate }}</th>
-          <th style="width: 10%">{{ 'common.delete' | translate }}</th>
+          <th style="width: 6%">{{ 'common.edit' | translate }}</th>
+          <th style="width: 6%">{{ 'common.delete' | translate }}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-group>
         <tr>
           <td>{{ group.name }}</td>
           <td>
-            <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditGroup('edit', group.name)"></p-button>
+            <p-button icon="pi pi-pencil" [outlined]="true" (onClick)="onEditGroup(EnumFormType.EDIT, group.name)"></p-button>
           </td>
           <td>
             <p-button icon="pi pi-trash" [outlined]="true" (onClick)="onDeleteGroup(group.name)"></p-button>

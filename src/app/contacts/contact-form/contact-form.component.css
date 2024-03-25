@@ -1,2 +1,8 @@
 .error-message {
   color: #ff0000; }
+
+.submit-wrap {
+  position: fixed;
+  bottom: 2rem; }
+
+/*# sourceMappingURL=contact-form.component.css.map */

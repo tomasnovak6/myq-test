@@ -32,17 +32,14 @@ export class NodeService {
   constructor(
     private groupsService: GroupsService,
     private contactsService: ContactsService
-  ) {
+  ) {}
 
-  }
-
-  public getFileSystemNodesData() {
+  public getContactNodesData(): Promise<ITreeView[]> {
     let groups: IGroups[] = this.groupsService.getGroups();
     let contacts: IContacts[] = this.contactsService.getContacts();
 
     let data: ITreeViewData;
     let result: ITreeView[] = [];
-
 
     for(const group of groups) {
       let childData: ITreeViewChildData = {};
@@ -76,60 +73,7 @@ export class NodeService {
       result.push(item);
     }
 
-
-
-    // let result2 = [
-    //   {
-    //     "data": {
-    //       "fullname": "Friends",
-    //       "type": "Group"
-    //     },
-    //     "children": [
-    //       {
-    //         "data": {
-    //           "fullname": "editor.app",
-    //           "email": "tnovak@centrum.cz",
-    //           "phone": "456 789 354",
-    //           "tags": "red,blue",
-    //           "type": "Contact"
-    //         }
-    //       },
-    //       {
-    //         "data": {
-    //           "fullname": "settings.app",
-    //           "email": "tnovak@seznam.cz",
-    //           "phone": "123 567 345",
-    //           "tags": "red",
-    //           "type": "Contact"
-    //         }
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     "data": {
-    //       "fullname": "Coworkers/Management",
-    //       "type": "Group"
-    //     },
-    //     "children": [
-    //       {
-    //         "data": {
-    //           "fullname": "dfdafasfasdfasfas",
-    //           "email": "tnovak@centrum.cz",
-    //           "phone": "456 789 354",
-    //           "tags": "red,blue",
-    //           "type": "Contact"
-    //         }
-    //       },
-    //     ]
-    //   },
-    // ]
-
-
-
-    return result;
+    return Promise.resolve(result);
   }
 
-  getFilesystem() {
-    return Promise.resolve(this.getFileSystemNodesData());
-  }
 }

@@ -4,13 +4,14 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {IContacts} from "../../model/i-contacts";
-import {ConfirmationService, MessageService, TreeNode} from "primeng/api";
+import {ConfirmationService, TreeNode} from "primeng/api";
 import {ContactFormComponent} from "../contact-form/contact-form.component";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ContactsService} from "../../services/contacts.service";
 import {NodeService} from "../../services/node.service";
-import {NgIf, NgFor} from "@angular/common";
+import {NgFor, NgIf} from "@angular/common";
+import {EnumFormType} from "../../model/enum-form-type";
 
 interface Column {
   field: string;
@@ -37,7 +38,7 @@ interface Column {
 export class ContactListComponent implements OnInit {
 
   public formShown: boolean = false;
-  public formType: 'create' | 'edit' = 'create';
+  public formType: EnumFormType = EnumFormType.CREATE;
   public formEmail: string = '';
 
   public files!: TreeNode[];
@@ -56,12 +57,12 @@ export class ContactListComponent implements OnInit {
   public ngOnInit(): void {
     this.getData();
 
-    this.nodeService.getFilesystem().then((files) => (this.files = files));
+    this.nodeService.getContactNodesData().then((files) => (this.files = files));
     this.cols = [
-      { field: 'fullname', header: 'Full name' },
-      { field: 'email', header: 'E-mail' },
-      { field: 'phone', header: 'Phone' },
-      { field: 'tags', header: 'Tags' },
+      { field: 'fullname', header: this.translateService.instant('contacts.fullname') },
+      { field: 'email', header: this.translateService.instant('contacts.email') },
+      { field: 'phone', header: this.translateService.instant('contacts.phone')},
+      { field: 'tags', header: this.translateService.instant('contacts.tags')},
       { field: '', header: '' }
     ];
   }
@@ -70,7 +71,7 @@ export class ContactListComponent implements OnInit {
     this.contacts = this.contactsService.getContacts();
   }
 
-  public onFormOpen(type: 'create' | 'edit', email: string): void {
+  public onFormOpen(type: EnumFormType, email: string): void {
     this.formShown = true;
     this.formType = type;
     if (this.formType === 'edit') {
@@ -84,7 +85,7 @@ export class ContactListComponent implements OnInit {
     this.getData();
   }
 
-  public onEditContact(type: 'create' | 'edit', email: string): void {
+  public onEditContact(type: EnumFormType, email: string): void {
     this.onFormOpen(type, email);
   }
 
@@ -104,4 +105,5 @@ export class ContactListComponent implements OnInit {
 
   }
 
+  protected readonly EnumFormType = EnumFormType;
 }
