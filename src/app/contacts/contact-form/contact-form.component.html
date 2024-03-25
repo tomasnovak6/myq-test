@@ -11,7 +11,7 @@
     </div>
 
     <div class="row mt-2">
-      <label for="email">{{ 'contacts.email' | translate }}</label>
+      <label for="email">{{ 'contacts.email' | translate }}:</label>
       <input type="text" pInputText formControlName="email" id="email" />
       <ng-container *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
         <span *ngIf="contactForm.get('email')?.errors?.['required']" class="error-message">{{ 'common.validations.required.email' | translate }}</span>
@@ -19,12 +19,12 @@
     </div>
 
     <div class="row mt-2">
-      <label for="phone">{{ 'contacts.phone' | translate }}</label>
+      <label for="phone">{{ 'contacts.phone' | translate }}:</label>
       <input type="text" pInputText formControlName="phone" id="phone" />
     </div>
 
     <div class="row mt-2">
-      <label for="group">{{ 'contacts.group' | translate }}</label>
+      <label for="group">{{ 'contacts.group' | translate }}:</label>
       <p-dropdown
         formControlName="group"
         id="group"
@@ -37,7 +37,7 @@
     </div>
 
     <div class="row mr-2">
-      <label for="tags">{{ 'contacts.tags' | translate }}</label>
+      <label for="tags">{{ 'contacts.tags' | translate }}:</label>
       <input type="text" pInputText formControlName="tags" id="tags" />
     </div>
 
